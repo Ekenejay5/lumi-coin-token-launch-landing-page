@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LumiCoin (LMC) | Empowering Digital Creators</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FFD93D', // Lemon yellow
+                        accent: '#2F4F4F',  // Slate gray
+                        light: '#F9F9F9',   // Soft white
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9F9F9;
+            color: #2F4F4F;
+            scroll-behavior: smooth;
+        }
+        
+        .section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .hamburger {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .hamburger.active .line:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        
+        .hamburger.active .line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active .line:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        
+        .contract-address {
+            font-family: monospace;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-light/95 backdrop-blur-md border-b border-accent/10 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span class="text-2xl font-bold font-heading text-accent">LMC</span>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="#story" class="px-3 py-2 rounded-md text-sm font-medium text-accent hover:text-primary transition">Story</a>
+                            <a href="#contract" class="px-3 py-2 rounded-md text-sm font-medium text-accent hover:text-primary transition">Contract</a>
+                            <a href="#disclaimer" class="px-3 py-2 rounded-md text-sm font-medium text-accent hover:text-primary transition">Disclaimer</a>
+                            <a href="#waitlist" class="px-3 py-2 rounded-md text-sm font-medium text-accent hover:text-primary transition">Waitlist</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <button id="connectWallet" class="px-4 py-2 rounded-md text-sm font-medium bg-primary text-accent hover:bg-primary/90 transition duration-300 shadow-md hover:shadow-lg">
+                        Connect Wallet
+                    </button>
+                </div>
+                <div class="md:hidden">
+                    <button id="menuBtn" class="hamburger flex flex-col justify-center items-center">
+                        <span class="line bg-accent w-6 h-0.5 my-0.5 transition-all"></span>
+                        <span class="line bg-accent w-6 h-0.5 my-0.5 transition-all"></span>
+                        <span class="line bg-accent w-6 h-0.5 my-0.5 transition-all"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-light/95 backdrop-blur-md">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#story" class="block px-3 py-2 rounded-md text-base font-medium text-accent hover:text-primary transition">Story</a>
+                <a href="#contract" class="block px-3 py-2 rounded-md text-base font-medium text-accent hover:text-primary transition">Contract</a>
+                <a href="#disclaimer" class="block px-3 py-2 rounded-md text-base font-medium text-accent hover:text-primary transition">Disclaimer</a>
+                <a href="#waitlist" class="block px-3 py-2 rounded-md text-base font-medium text-accent hover:text-primary transition">Waitlist</a>
+                <button id="connectWalletMobile" class="w-full text-left block px-3 py-2 rounded-md text-base font-medium bg-primary text-accent hover:bg-primary/90 transition duration-300 shadow-md">
+                    Connect Wallet
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-16 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="section">
+                <!-- Price display with subtle animation -->
+                <div class="mb-6 animate-pulse-slow">
+                    <span class="text-lg font-medium text-accent/80">Current Price:</span>
+                    <span id="tokenPrice" class="text-3xl font-bold font-heading text-primary ml-2">$0.045</span>
+                </div>
+                
+                <h1 class="text-4xl md:text-6xl font-bold font-heading text-accent mb-6">
+                    Join the <span class="text-primary">LumiCoin</span> Revolution
+                </h1>
+                <p class="text-xl md:text-2xl text-accent/80 max-w-3xl mx-auto mb-10">
+                    Powering the future of digital creator economies through decentralized community ownership and innovation.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button id="heroConnectWallet" class="px-8 py-3 rounded-full text-lg font-bold bg-primary text-accent hover:bg-primary/90 transition duration-300 shadow-lg hover:shadow-xl">
+                        Connect Wallet
+                    </button>
+                    <a href="#waitlist" class="px-8 py-3 rounded-full text-lg font-bold bg-transparent border-2 border-primary text-primary hover:bg-primary/10 transition duration-300">
+                        Join Waitlist
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Token Story & Mission -->
+    <section id="story" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 section">
+                <h2 class="text-3xl md:text-4xl font-bold font-heading text-accent mb-4">Our Story & Mission</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+            </div>
+            
+            <div class="bg-light rounded-xl p-8 shadow-md section">
+                <p class="text-lg text-accent mb-6">
+                    LumiCoin was born from a simple idea: digital creators deserve fair compensation and true ownership in the platforms they help build.
+                </p>
+                <p class="text-lg text-accent">
+                    Our mission is to create a decentralized ecosystem where creators and communities share in the value they generate. Through blockchain technology and community governance, we're building tools that empower creators to monetize their work directly, without middlemen taking unfair cuts.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contract Address Section -->
+    <section id="contract" class="py-20 bg-light">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 section">
+                <h2 class="text-3xl md:text-4xl font-bold font-heading text-accent mb-4">Contract Address</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-lg text-accent/80">Official LumiCoin (LMC) smart contract address</p>
+            </div>
+            
+            <div class="bg-white rounded-xl p-6 shadow-md section">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+                    <div class="contract-address bg-light p-3 rounded-lg text-accent overflow-x-auto w-full text-center sm:text-left">
+                        0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359
+                    </div>
+                    <button id="copyAddress" class="px-4 py-2 rounded-md text-sm font-medium bg-primary text-accent hover:bg-primary/90 transition duration-300 shadow-md whitespace-nowrap">
+                        <i class="far fa-copy mr-2"></i>Copy Address
+                    </button>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button class="px-6 py-3 rounded-full text-base font-medium bg-accent text-light hover:bg-accent/90 transition duration-300 shadow-md flex items-center justify-center">
+                        <i class="fab fa-ethereum mr-2"></i> Buy with Crypto
+                    </button>
+                    <button class="px-6 py-3 rounded-full text-base font-medium bg-primary text-accent hover:bg-primary/90 transition duration-300 shadow-md flex items-center justify-center">
+                        <i class="far fa-credit-card mr-2"></i> Buy with Debit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Important Disclaimer -->
+    <section id="disclaimer" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 section">
+                <h2 class="text-3xl md:text-4xl font-bold font-heading text-accent mb-4">Important Disclaimer</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+            </div>
+            
+            <div class="bg-light rounded-xl p-8 shadow-md section">
+                <div class="prose prose-accent max-w-none">
+                    <p class="text-accent mb-4">
+                        LumiCoin (LMC) is a decentralized digital asset. Purchasing cryptocurrencies involves substantial risk of loss and is not suitable for every investor. You should carefully consider your investment objectives and risk appetite before deciding to purchase LumiCoin.
+                    </p>
+                    <p class="text-accent mb-4">
+                        The value of LumiCoin may fluctuate and you may lose some or all of your investment. Past performance is not indicative of future results. Always conduct your own due diligence and consult with a licensed financial advisor before making any investment decisions.
+                    </p>
+                    <p class="text-accent">
+                        By purchasing LumiCoin, you acknowledge that you understand these risks and that LumiCoin's developers and team members are not responsible for any losses you may incur. Always verify contract addresses before making any transactions.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dev Wallet Lock Info -->
+    <section class="py-20 bg-light">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 section">
+                <h2 class="text-3xl md:text-4xl font-bold font-heading text-accent mb-4">Developer Commitment</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-lg text-accent/80">Transparent tokenomics for long-term stability</p>
+            </div>
+            
+            <div class="bg-white rounded-xl p-8 shadow-md section">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-accent mb-4 flex items-center">
+                            <i class="fas fa-lock text-primary mr-2"></i> Team Tokens Locked
+                        </h3>
+                        <p class="text-accent">
+                            20% of total supply allocated to development team with 3-year vesting period and quarterly unlocks to ensure long-term commitment.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-accent mb-4 flex items-center">
+                            <i class="fas fa-shield-alt text-primary mr-2"></i> Liquidity Protection
+                        </h3>
+                        <p class="text-accent">
+                            15% of total supply locked in Uniswap liquidity pool for 2 years with keys held by multi-signature wallet requiring 5/7 approvals.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Waitlist -->
+    <section id="waitlist" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 section">
+                <h2 class="text-3xl md:text-4xl font-bold font-heading text-accent mb-4">Join Our Waitlist</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-lg text-accent/80">Be the first to know about LumiCoin updates and opportunities</p>
+            </div>
+            
+            <div class="bg-light rounded-xl p-8 shadow-md section">
+                <form id="waitlistForm" class="space-y-6">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-accent mb-2">Email Address</label>
+                        <input type="email" id="email" required class="w-full px-4 py-3 rounded-lg bg-white border border-accent/20 focus:border-primary focus:outline-none transition text-accent">
+                    </div>
+                    <button type="submit" class="w-full px-6 py-3 rounded-full text-base font-medium bg-primary text-accent hover:bg-primary/90 transition duration-300 shadow-md">
+                        Join Waitlist
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-accent text-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <span class="text-2xl font-bold font-heading text-primary">LMC</span>
+                    <p class="mt-2">Empowering digital creators</p>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-6 mb-6 md:mb-0">
+                    <a href="#" class="hover:text-primary transition">Terms of Service</a>
+                    <a href="#" class="hover:text-primary transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-primary transition">Whitepaper</a>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center hover:bg-primary/30 transition text-primary">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center hover:bg-primary/30 transition text-primary">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center hover:bg-primary/30 transition text-primary">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-8 border-t border-primary/20 text-center text-primary/70 text-sm">
+                <p>© 2023 LumiCoin. All rights reserved.</p>
+                <p class="mt-2">This is a fictional project for demonstration purposes only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuBtn.classList.remove('active');
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Connect wallet buttons
+        const connectButtons = [
+            document.getElementById('connectWallet'),
+            document.getElementById('connectWalletMobile'),
+            document.getElementById('heroConnectWallet')
+        ];
+        
+        connectButtons.forEach(button => {
+            if (button) {
+                button.addEventListener('click', () => {
+                    alert('Wallet connection would be implemented here in a real application');
+                });
+            }
+        });
+        
+        // Copy contract address
+        document.getElementById('copyAddress').addEventListener('click', () => {
+            const address = document.querySelector('.contract-address').textContent.trim();
+            navigator.clipboard.writeText(address);
+            
+            const originalText = document.getElementById('copyAddress').innerHTML;
+            document.getElementById('copyAddress').innerHTML = '<i class="fas fa-check mr-2"></i>Copied!';
+            
+            setTimeout(() => {
+                document.getElementById('copyAddress').innerHTML = originalText;
+            }, 2000);
+        });
+        
+        // Token price animation
+        function animatePrice() {
+            const priceElement = document.getElementById('tokenPrice');
+            let currentPrice = 0.045;
+            let direction = 1;
+            const fluctuation = 0.0005;
+            
+            setInterval(() => {
+                // Simulate small price fluctuations
+                currentPrice += (Math.random() * fluctuation * direction);
+                direction *= -1;
+                
+                // Ensure price stays within reasonable bounds
+                currentPrice = Math.max(0.044, Math.min(0.046, currentPrice));
+                
+                priceElement.textContent = '$' + currentPrice.toFixed(4);
+            }, 3000);
+        }
+        
+        // Waitlist form submission
+        document.getElementById('waitlistForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            alert(`Thank you for joining our waitlist! We'll contact you at ${email} with updates.`);
+            document.getElementById('waitlistForm').reset();
+        });
+        
+        // Scroll animations
+        const sections = document.querySelectorAll('.section');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Start animations when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            animatePrice();
+        });
+    </script>
+</body>
+</html>
