@@ -24,9 +24,4 @@ A modern, fully responsive Web3 token launch landing page template built with HT
 
 - HTML5  
 - Tailwind CSS  
-- JavaScript (for menu toggle, animations, and copy functionality)  
-
-
----
-
-Feel free to customize the README further or ask me if you want help with advanced setup instructions or demo hosting tips!
+- JavaScript (for menu toggle, animations, and copy functionality)
